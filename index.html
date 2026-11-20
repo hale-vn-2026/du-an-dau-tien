@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thiệp Chúc Mừng 20/11 - Bé Cherry</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #fdfbfb 0%, #f3e7e9 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+      color: #5c3a4d;
+    }
+    .header-text {
+      text-align: center;
+      margin-bottom: 18px;
+      animation: pulse 2s infinite;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+    .card-container {
+      width: 100%;
+      max-width: 380px;
+      aspect-ratio: 3 / 4;
+      perspective: 1500px;
+      cursor: pointer;
+    }
+    .card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.9s cubic-bezier(0.4, 0.2, 0.2, 1);
+      border-radius: 16px;
+      box-shadow: 0 15px 35px rgba(92, 58, 77, 0.25);
+    }
+    .card.is-flipped {
+      transform: rotateY(180deg);
+    }
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .card-face img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .card-back {
+      transform: rotateY(180deg);
+    }
+    .controls {
+      margin-top: 20px;
+      display: flex;
+      gap: 12px;
+    }
+    button {
+      background: #d65a84;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(214, 90, 132, 0.3);
+      transition: background 0.2s;
+    }
+    button:hover { background: #b8446b; }
+    .footer-text {
+      margin-top: 18px;
+      font-size: 14px;
+      font-style: italic;
+      opacity: 0.85;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-text">✨ Chạm vào thiệp để lật mở & nghe lời chúc của Cherry ✨</div>
+
+  <div class="card-container" onclick="flipCard()">
+    <div class="card" id="greetingCard">
+      <div class="card-face card-front">
+        <img src="anh-bia.jpg" alt="Mặt trước thiệp 20/11">
+      </div>
+      <div class="card-face card-back">
+        <img src="la-thu.jpg" alt="Lời chúc từ bé Cherry">
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button onclick="flipCard()">🔄 Lật thiệp</button>
+    <button onclick="toggleAudio()" id="audioBtn">🔊 Nghe lời chúc</button>
+  </div>
+
+  <div class="footer-text">Happy Vietnamese Teachers' Day 20/11 - From Cherry</div>
+
+  <audio id="voiceAudio" src="loi-chuc.mp3"></audio>
+
+  <script>
+    const card = document.getElementById('greetingCard');
+    const audio = document.getElementById('voiceAudio');
+    const audioBtn = document.getElementById('audioBtn');
+
+    function flipCard() {
+      card.classList.toggle('is-flipped');
+      if (card.classList.contains('is-flipped') && audio.paused) {
+        audio.play().then(() => {
+          audioBtn.textContent = '⏸️ Tạm dừng';
+        }).catch(() => {});
+      }
+    }
+
+    function toggleAudio() {
+      if (audio.paused) {
+        audio.play();
+        audioBtn.textContent = '⏸️ Tạm dừng';
+      } else {
+        audio.pause();
+        audioBtn.textContent = '🔊 Nghe lời chúc';
+      }
+    }
+
+    audio.onended = () => {
+      audioBtn.textContent = '🔁 Nghe lại';
+    };
+  </script>
+</body>
+</html>
